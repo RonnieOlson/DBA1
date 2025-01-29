@@ -1,0 +1,78 @@
+USE ap;
+SELECT * 
+FROM vendors
+ORDER BY vendor_id;
+-- This query is to select all from the vendors table and displyit in the order of the vendor id
+
+SELECT vendor_name, vendor_phone, vendor_city
+FROM vendors
+WHERE vendor_state LIKE 'CA'
+ORDER BY vendor_name;
+-- This query selects vendor name, phone and city collumn and displays only the ones from the state of California in the order of the vendor name
+
+SELECT invoice_id, invoice_total, invoice_date -- Displays the invoice_id, invoice_total, and invoice_date collumns
+FROM invoices -- from the invoices table
+ORDER BY invoice_total DESC; -- and sorts it by the invoice_total in descending order
+
+
+SELECT invoice_id, invoice_total -- Displays the invoice_id and invoice_total columns
+FROM invoices -- from the invoice table
+ORDER BY invoice_total -- it then sorts it by the invoice totals
+LIMIT 3,9; -- it then fetches the invoice_total with the 3rd to 9th lowest total
+
+
+
+SELECT invoice_id, invoice_total,  invoice_total - payment_total AS remaining_balance -- fetches the invoice_id and invoice_total columns and uses arithmatic to calculate the remaining balance it is also alias as remaining_balance
+FROM invoices -- from the invoices table
+ORDER BY invoice_id; -- it then sorts it in the order of invoice_id
+
+
+
+
+SELECT invoice_id, invoice_total, vendor_name, vendor_phone -- fetches the invoice_id, invoice_total, vendor_name, and vendor_phone
+FROM invoices -- from invoices table
+INNER JOIN vendors -- this joins the vendors column that were fetched with the select command
+ORDER BY invoice_id; -- and sorted in the order of invoice_id
+
+
+SELECT vendor_name, invoice_id -- fetches the vendor_name and invoice_id columns 
+FROM vendors -- from the vendors table 
+	LEFT JOIN invoices -- this joins the invoices table with the vendors table on the left side
+    ON vendors.vendor_id = invoices.vendor_id -- to create a match so both tables are connected 
+ORDER BY vendor_name; -- sorted in the order of the vendor names
+
+USE ex; -- this allows you to use only the tables from the ex database
+SELECT department_name, last_name -- fetches the department_name and last_name columns
+FROM departments -- from the departments table
+	LEFT JOIN employees -- it then joins the employees table with the departments table 
+	ON departments.department_number = employees.department_number -- ensures that there will be a match between both tables that are being fetched from
+ORDER BY department_name; -- sorted in the order of department names
+
+
+
+SELECT CONCAT(first_name, " ", last_name) AS full_name, vendor_name -- this fetches the first_name and last_name columns and concatinates togethrt as full_name and also fetches vendor_name 
+FROM vendor_contacts -- from the vendor_contacts table
+	LEFT JOIN vendors -- it joins the vendors with the vendor_contacts table
+    ON vendor_contacts.vendor_id = vendors.vendor_id -- creates a match between both tables
+ORDER BY full_name; -- sorted in the order of the full_name table 
+
+
+	
+
+
+
+	SELECT first_name -- fetches the first_name column
+	FROM employees -- from the employees table 
+UNION -- THIS IS THE COOL PART! it then combines both the top statments with the bottom ones
+	SELECT rep_first_name -- fetches the rep_first_name column 
+    from sales_reps -- from the sales_reps table
+	ORDER BY first_name; -- it then sorts the table by the first name 
+    
+    
+SELECT invoice_id, invoice_date, vendor_name, terms_description -- fetches the invoice_id,invoice_date,vendor_name,terms_description columns
+FROM invoices -- from the invoices table 
+	JOIN vendors -- the vendors table is joined with the invoices table
+		ON  vendors.vendor_id = invoices.vendor_id -- this creates a match between the vendors and invoices tables 
+	JOIN terms -- the terms table is joined to the invoices table on the left of the vendors table 
+		ON terms.terms_id = invoices.terms_id -- this creates a match between the terms and invoices tables 
+ORDER BY invoice_id; -- it is sorted by  invoice_id 
