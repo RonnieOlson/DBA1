@@ -52,7 +52,7 @@ ORDER BY department_name; -- sorted in the order of department names
 
 SELECT CONCAT(first_name, " ", last_name) AS full_name, vendor_name -- this fetches the first_name and last_name columns and concatinates togethrt as full_name and also fetches vendor_name 
 FROM vendor_contacts -- from the vendor_contacts table
-	LEFT JOIN vendors -- it joins the vendors with the vendor_contacts table
+    LEFT JOIN vendors -- it joins the vendors with the vendor_contacts table
     ON vendor_contacts.vendor_id = vendors.vendor_id -- creates a match between both tables
 ORDER BY full_name; -- sorted in the order of the full_name table 
 
